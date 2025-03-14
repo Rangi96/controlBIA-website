@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control BIA - Visualization & Analytics</title>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            overflow-y: auto;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%);
+            color: white;
+            min-height: 100vh;
+        }
+
+        .dashboards-section {
+            background: linear-gradient(180deg, #182848 0%, #4b6cb7 100%);
+            padding: 80px 0;
+            min-height: 100vh;
+        }
+
+        .dashboards-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .dashboards-container h2 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 60px;
+            color: #2050E0;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .dashboard-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            height: 600px;
+        }
+
+        .dashboard-title {
+            color: #B070DD;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .dashboard-frame-wrapper {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            margin-bottom: 20px;
+        }
+
+        .dashboard-frame {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 10px;
+            background: white;
+        }
+
+        @media (max-width: 1024px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .dashboard-frame-wrapper {
+                height: 400px;
+            }
+            
+            .dashboard-item {
+                height: 500px;
+            }
+        }
+
+        .video-section {
+            background: linear-gradient(180deg, #182848 0%, #4b6cb7 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 80px 20px;
+        }
+
+        .video-container {
+            max-width: 1200px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .video-content {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 40px;
+            backdrop-filter: blur(10px);
+            margin-bottom: 40px;
+        }
+
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            margin: 30px 0;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+            border: none;
+        }
+
+        .video-title {
+            color: #2050E0;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .video-description {
+            color: white;
+            font-size: 1.2em;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto 30px;
+        }
+
+        .video-cta {
+            display: inline-block;
+            background: #B070DD;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .video-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(176, 112, 221, 0.4);
+        }
+
+        .services-section {
+            background: linear-gradient(180deg, #1a1a1a 0%, #182848 100%);
+            padding: 80px 0;
+            min-height: 100vh;
+        }
+
+        .services-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .services-container h2 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 60px;
+            color: #2050E0;
+        }
+
+        .services-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            padding: 20px;
+        }
+
+        .service-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .service-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .service-card h3 {
+            color: #B070DD;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .service-card p {
+            color: white;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .service-features {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .service-features li {
+            padding: 8px 0;
+            color: rgba(255, 255, 255, 0.8);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .service-features li:last-child {
+            border-bottom: none;
+        }
+
+        @media (max-width: 768px) {
+            .services-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .services-container h2 {
+                font-size: 2em;
+            }
+        }
+
+        .nav-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(24, 40, 72, 0.95);
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1em;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .section {
+            min-height: 100vh;
+            scroll-margin-top: 80px;
+        }
+
+        .content-container {
+            display: flex;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .visualization-container {
+            width: 50%;
+            position: relative;
+            left: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .visualization-container canvas {
+            position: absolute;
+        }
+
+        .text-content {
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-right: 5%;
+            text-align: right;
+        }
+
+        h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 1024px) {
+            .content-container {
+                flex-direction: column;
+            }
+
+            .visualization-container,
+            .text-content {
+                width: 100%;
+                height: 50vh;
+            }
+
+            .text-content {
+                text-align: center;
+                padding: 20px 5%;
+            }
+
+            h1 {
+                font-size: 2.5em;
+            }
+        }
+
+        .about-section {
+            background: linear-gradient(180deg, #182848 0%, #1a1a1a 100%);
+            padding: 80px 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .about-content {
+            color: white;
+        }
+
+        .about-content h2 {
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .about-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+        }
+
+        .about-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .about-item h3 {
+            color: #2050E0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .service-item {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .service-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .service-item h4 {
+            color: white;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .service-item p {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 1024px) {
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .about-content h2 {
+                font-size: 2em;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .about-section {
+                padding: 40px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-bar">
+        <a href="#home" class="nav-link">Home</a>
+        <a href="#about" class="nav-link">About</a>
+        <a href="#services" class="nav-link">Services</a>
+        <a href="#dashboards" class="nav-link">Dashboards</a>
+        <a href="#video" class="nav-link">Our Story</a>
+    </nav>
+
+    <div id="home" class="content-container section">
+        <div class="visualization-container" id="visualization-container">
+        </div>
+
+        <div class="text-content">
+            <h1>Visualization, Automation & Analytics</h1>
+            <p>We empower companies to make data-driven decisions through expert business intelligence and automation solutions.</p>
+        </div>
+    </div>
+
+    <div id="about" class="about-section section">
+        <div class="about-container">
+            <div class="about-content">
+                <h2>About Us</h2>
+                <div class="about-grid">
+                    <div class="about-item">
+                        <h3>Our Vision</h3>
+                        <p>To revolutionize decision-making through data, empowering businesses to thrive in the digital age. We believe that every business decision should be backed by robust analytics and actionable insights.</p>
+                    </div>
+                    <div class="about-item">
+                        <h3>Our Expertise</h3>
+                        <p>With over a decade of experience in data analytics, business intelligence, and machine learning, we've helped hundreds of organizations transform their data into strategic assets.</p>
+                    </div>
+                    <div class="about-item">
+                        <h3>Our Approach</h3>
+                        <p>We combine cutting-edge technology with industry best practices to deliver customized solutions that address your specific business challenges. Our collaborative approach ensures that you're involved at every step.</p>
+                    </div>
+                    <div class="about-item">
+                        <h3>Our Impact</h3>
+                        <p>Our solutions have helped clients achieve an average of 35% improvement in operational efficiency and a 40% reduction in decision-making time through data-driven insights.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="services" class="services-section section">
+        <div class="services-container">
+            <h2>Our Services</h2>
+            <div class="services-cards">
+                <div class="service-card">
+                    <div class="service-icon">📊</div>
+                    <h3>Data Analytics</h3>
+                    <p>Transform raw data into actionable insights with our comprehensive analytics solutions.</p>
+                    <ul class="service-features">
+                        <li>Predictive Analytics</li>
+                        <li>Business Intelligence</li>
+                        <li>Data Visualization</li>
+                        <li>Statistical Analysis</li>
+                    </ul>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">🤖</div>
+                    <h3>Process Automation</h3>
+                    <p>Streamline your operations with intelligent automation solutions.</p>
+                    <ul class="service-features">
+                        <li>Workflow Automation</li>
+                        <li>RPA Implementation</li>
+                        <li>Process Optimization</li>
+                        <li>Custom Automation Tools</li>
+                    </ul>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">🎯</div>
+                    <h3>Strategy Consulting</h3>
+                    <p>Develop data-driven strategies to achieve your business objectives.</p>
+                    <ul class="service-features">
+                        <li>Digital Transformation</li>
+                        <li>Data Strategy</li>
+                        <li>Technology Roadmap</li>
+                        <li>Change Management</li>
+                    </ul>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">🔄</div>
+                    <h3>Integration Services</h3>
+                    <p>Seamlessly connect your systems and data sources.</p>
+                    <ul class="service-features">
+                        <li>API Development</li>
+                        <li>System Integration</li>
+                        <li>Data Migration</li>
+                        <li>Cloud Solutions</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="dashboards" class="dashboards-section section">
+        <div class="dashboards-container">
+            <h2>Interactive Dashboards</h2>
+            <div class="dashboard-grid">
+                <div class="dashboard-item">
+                    <h3 class="dashboard-title">TMDB Analytics</h3>
+                    <div class="dashboard-frame-wrapper">
+                        <iframe 
+                            class="dashboard-frame"
+                            src="https://app.powerbi.com/view?r=eyJrIjoiYjYwNDZjNGYtNzI0Yy00Zjc4LWE5ZmItOTAwZTYyMTY3N2MyIiwidCI6IjU4MGQzNWExLWE2Y2EtNDcwYS1hNTY3LTc0OGI0OTI0MzAyOCIsImMiOjJ9"
+                            frameborder="0"
+                            allowFullScreen="true"
+                            width="100%"
+                            height="100%">
+                        </iframe>
+                    </div>
+                </div>
+
+                <div class="dashboard-item">
+                    <h3 class="dashboard-title">Sales Performance</h3>
+                    <div class="dashboard-frame-wrapper">
+                        <iframe 
+                            class="dashboard-frame"
+                            src="https://app.powerbi.com/view?r=eyJrIjoiZTAyZDUyYWYtOTE5OS00ZTMyLTk5ZmMtNjI5ZTUyZTE0OWVmIiwidCI6IjU4MGQzNWExLWE2Y2EtNDcwYS1hNTY3LTc0OGI0OTI0MzAyOCIsImMiOjJ9"
+                            frameborder="0"
+                            allowFullScreen="true"
+                            width="100%"
+                            height="100%">
+                        </iframe>
+                    </div>
+                </div>
+
+                <div class="dashboard-item">
+                    <h3 class="dashboard-title">Monthly Closing Report</h3>
+                    <div class="dashboard-frame-wrapper">
+                        <iframe 
+                            class="dashboard-frame"
+                            src="https://app.powerbi.com/view?r=eyJrIjoiYmE0YzljYjctODEyYS00YmQ5LWJiYmYtZTY3YmE0OWYwZjQ3IiwidCI6IjU4MGQzNWExLWE2Y2EtNDcwYS1hNTY3LTc0OGI0OTI0MzAyOCIsImMiOjJ9"
+                            frameborder="0"
+                            allowFullScreen="true"
+                            width="100%"
+                            height="100%">
+                        </iframe>
+                    </div>
+                </div>
+
+                <div class="dashboard-item">
+                    <h3 class="dashboard-title">Spotify Analytics</h3>
+                    <div class="dashboard-frame-wrapper">
+                        <iframe 
+                            class="dashboard-frame"
+                            src="https://app.powerbi.com/view?r=eyJrIjoiY2Q0NDg4NjctODA4ZS00OWYwLWFlNzItNDQyM2EwNDk5MmU3IiwidCI6IjU4MGQzNWExLWE2Y2EtNDcwYS1hNTY3LTc0OGI0OTI0MzAyOCIsImMiOjJ9"
+                            frameborder="0"
+                            allowFullScreen="true"
+                            width="100%"
+                            height="100%">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="video" class="video-section section">
+        <div class="video-container">
+            <div class="video-content">
+                <h2 class="video-title">Our Story</h2>
+                <p class="video-description">Discover how we're transforming businesses through the power of data analytics and intelligent automation. Join us on our journey to create a more data-driven future.</p>
+                
+                <div class="video-wrapper">
+                    <iframe 
+                        src="https://www.youtube.com/embed/rsTsqS4Kz6g"
+                        title="Corporate Video"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                        width="100%"
+                        height="100%">
+                    </iframe>
+                </div>
+
+                <a href="#contact" class="video-cta">Get in Touch</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Wait for the DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            const scene = new THREE.Scene();
+            const container = document.getElementById('visualization-container');
+            
+            // If container doesn't exist yet, exit
+            if (!container) return;
+            
+            const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ 
+                antialias: true,
+                alpha: true
+            });
+            
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setClearColor(0x000000, 0);
+            container.appendChild(renderer.domElement);
+
+            const ambientLight = new THREE.AmbientLight(0xffffff, 1.5);
+            scene.add(ambientLight);
+
+            const lights = [
+                { pos: [5, 5, 5], intensity: 1.0 },
+                { pos: [-5, 5, 5], intensity: 1.0 },
+                { pos: [0, 5, -5], intensity: 1.0 },
+                { pos: [0, -5, 5], intensity: 1.0 }
+            ];
+
+            lights.forEach(light => {
+                const directionalLight = new THREE.DirectionalLight(0xffffff, light.intensity);
+                directionalLight.position.set(...light.pos);
+                scene.add(directionalLight);
+            });
+
+            const middleBarHeight = 10.5;
+            const sideBarHeight = middleBarHeight * 0.7;
+            const sideBarStart = middleBarHeight * 0.15;
+            const sideBarYOffset = sideBarStart - middleBarHeight / 2 + sideBarHeight / 2;
+
+            const barGeometries = [
+                new THREE.BoxGeometry(3.5, sideBarHeight, 3.5, 32, 32, 32),
+                new THREE.BoxGeometry(3.5, middleBarHeight, 3.5, 32, 32, 32),
+                new THREE.BoxGeometry(3.5, sideBarHeight, 3.5, 32, 32, 32),
+            ];
+
+            function increaseSaturation(hex, factor = 1.2) {
+                const color = new THREE.Color(hex);
+                const hsl = {};
+                color.getHSL(hsl);
+                return new THREE.Color().setHSL(hsl.h, Math.min(1, hsl.s * factor), hsl.l);
+            }
+
+            function createBrushedMetalMaterial(color) {
+                const saturatedColor = increaseSaturation(color);
+                return new THREE.MeshPhysicalMaterial({
+                    color: saturatedColor,
+                    metalness: 0.75,
+                    roughness: 0.3,
+                    reflectivity: 0.9,
+                    clearcoat: 0.4,
+                    clearcoatRoughness: 0.3,
+                    emissive: saturatedColor,
+                    emissiveIntensity: 0.15
+                });
+            }
+
+            const materials = [
+                createBrushedMetalMaterial(0x2050E0), // Blue
+                createBrushedMetalMaterial(0xB070DD), // Purple
+                createBrushedMetalMaterial(0xBFBFBF)  // Gray
+            ];
+
+            const bars = [];
+            barGeometries.forEach((geometry, index) => {
+                const bar = new THREE.Mesh(geometry, materials[index]);
+                
+                if (index === 1) {
+                    bar.position.set(index * 4 - 3.5, 0, 0);
+                } else {
+                    bar.position.set(index * 4 - 3.5, sideBarYOffset, 0);
+                }
+
+                scene.add(bar);
+                bars.push(bar);
+            });
+
+            const group = new THREE.Group();
+            bars.forEach(bar => group.add(bar));
+            scene.add(group);
+
+            camera.position.z = 15;
+
+            let mouseX = 0, mouseY = 0;
+            let targetRotationX = 0;
+            let targetRotationY = 0;
+            let currentRotationX = 0;
+            let currentRotationY = 0;
+
+            const maxRotation = Math.PI / 7;
+
+            document.addEventListener('mousemove', (event) => {
+                const rect = container.getBoundingClientRect();
+                const x = event.clientX - rect.left;
+                const y = event.clientY - rect.top;
+                
+                mouseX = (x / rect.width) * 2 - 1;
+                mouseY = -(y / rect.height) * 2 + 1;
+                
+                targetRotationY = Math.max(Math.min(mouseX * 0.8, maxRotation), -maxRotation);
+                targetRotationX = Math.max(Math.min(mouseY * 0.8, maxRotation), -maxRotation);
+            });
+
+            function animate() {
+                currentRotationX += (targetRotationX - currentRotationX) * 0.01;
+                currentRotationY += (targetRotationY - currentRotationY) * 0.01;
+
+                group.rotation.x = currentRotationX;
+                group.rotation.y = currentRotationY;
+
+                renderer.render(scene, camera);
+                requestAnimationFrame(animate);
+            }
+
+            function handleResize() {
+                const rect = container.getBoundingClientRect();
+                camera.aspect = rect.width / rect.height;
+                camera.updateProjectionMatrix();
+                renderer.setSize(rect.width, rect.height);
+            }
+
+            window.addEventListener('resize', handleResize);
+            handleResize();
+            animate();
+        });
+    </script>
+</body>
+</html>
