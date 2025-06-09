@@ -168,7 +168,7 @@
         .hero-section::before {
             content: '';
             position: absolute;
-            top: 25%;
+            top: 75%;
             right: -10%;
             width: 60%;
             height: 3px;
@@ -193,6 +193,37 @@
                 opacity: 0.8; 
             }
         }
+        /* ADD FLOWING WAVES - Place this RIGHT AFTER the @keyframes aboutLineFlow block */
+        
+        /* Flowing Wave Pattern - Second Layer */
+        .hero-section::after {
+            content: '';
+            position: absolute;
+            bottom: 30%;
+            right: 0%;
+            width: 100%;
+            height: 300px;
+            background: 
+                radial-gradient(ellipse at 20% 50%, rgba(176, 112, 221, 0.2) 0%, transparent 70%),
+                radial-gradient(ellipse at 80% 30%, rgba(32, 80, 224, 0.15) 0%, transparent 60%),
+                radial-gradient(ellipse at 50% 80%, rgba(96, 192, 255, 0.2) 0%, transparent 60%);
+            clip-path: path('M0,100 C200,50 400,150 600,100 C800,50 1000,150 1200,100 C1400,50 1600,150 1800,100 C1700,180 1400,220 1200,200 C1000,180 1600,220 1400,200 C1000,1180 2100,220 10,3200 Z');
+            transform: rotate(0deg);
+            animation: heroWaveFlow 18s ease-in-out infinite;
+            z-index: 0;
+        }
+
+        /* Wave Animation */
+        @keyframes heroWaveFlow {
+            0%, 100% { 
+                transform: rotate(-3deg) translateY(0); 
+                opacity: 0.4; 
+            }
+            50% { 
+                transform: rotate(-3deg) translateY(-20px); 
+                opacity: 0.7; 
+            }
+        }
 
         .visualization-container {
             width: 50%;
@@ -204,7 +235,8 @@
         }
 
         .visualization-container canvas {
-            position: absolute;
+            position: absolute;  
+            z-index: 5;
         }
 
         .text-content {
@@ -291,7 +323,7 @@
 /* Stats-section */
         .stats-section {
             background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
-            padding: 80px 0;
+            padding: 60px 0;
             position: relative;
             overflow: hidden;
         }
@@ -368,7 +400,7 @@
 /* About-section */
         .about-section {
             background: linear-gradient(180deg, #16213e 0%, #0f0f23 100%);
-            padding: 100px 0;
+            padding: 10px 0;
             position: relative;
             overflow: hidden;
         }
@@ -402,6 +434,38 @@
                 opacity: 0.7; 
             }
         }
+        /* ADD FLOWING WAVES - Place this RIGHT AFTER the @keyframes aboutLineFlow block */
+        
+        /* Flowing Wave Pattern - Second Layer */
+        .about-section::after {
+            content: '';
+            position: absolute;
+            bottom: 30%;
+            right: 80%;
+            width: 500px;
+            height: 300px;
+            background: 
+                radial-gradient(ellipse at 20% 50%, rgba(176, 112, 221, 0.2) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 30%, rgba(32, 80, 224, 0.15) 0%, transparent 40%),
+                radial-gradient(ellipse at 50% 80%, rgba(96, 192, 255, 0.2) 0%, transparent 60%);
+            clip-path: path('M0,100 C50,50 100,150 200,100 C300,50 400,150 500,100 L500,300 L0,300 Z');
+            transform: rotate(-3deg);
+            animation: aboutWaveFlow 18s ease-in-out infinite;
+            z-index: 2;
+        }
+
+        /* Wave Animation */
+        @keyframes aboutWaveFlow {
+            0%, 100% { 
+                transform: rotate(-3deg) translateY(0); 
+                opacity: 0.4; 
+            }
+            50% { 
+                transform: rotate(-3deg) translateY(-20px); 
+                opacity: 0.7; 
+            }
+        }
+
 
         .about-container {
             max-width: 1200px;
@@ -466,7 +530,7 @@
 /* Services-section */
         .services-section {
             background: linear-gradient(180deg, #0f0f23 0%, #1a1a2e 100%);
-            padding: 100px 0;
+            padding: 10px 0;
             position: relative;
             overflow: hidden;
         }
@@ -497,6 +561,37 @@
             }
             50% { 
                 transform: rotate(10deg) translateX(-30px); 
+                opacity: 0.7; 
+            }
+        }
+        /* ADD FLOWING WAVES - Place this RIGHT AFTER the @keyframes aboutLineFlow block */
+        
+        /* Flowing Wave Pattern - Second Layer */
+        .services-section::after {
+            content: '';
+            position: absolute;
+            bottom: 30%;
+            right: -10%;
+            width: 600px;
+            height: 300px;
+            background: 
+                radial-gradient(ellipse at 20% 50%, rgba(176, 112, 221, 0.2) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 30%, rgba(32, 80, 224, 0.15) 0%, transparent 40%),
+                radial-gradient(ellipse at 50% 80%, rgba(96, 192, 255, 0.2) 0%, transparent 60%);
+            clip-path: path('M0,100 C200,50 400,150 600,100 C800,50 1000,150 1200,100 C1400,50 1600,150 1800,100 L1800,200 L0,200 Z');
+            transform: rotate(-3deg);
+            animation: aboutWaveFlow 18s ease-in-out infinite;
+            z-index: 2;
+        }
+
+        /* Wave Animation */
+        @keyframes servicesWaveFlow {
+            0%, 100% { 
+                transform: rotate(-3deg) translateY(0); 
+                opacity: 0.4; 
+            }
+            50% { 
+                transform: rotate(-3deg) translateY(-20px); 
                 opacity: 0.7; 
             }
         }
@@ -708,6 +803,39 @@
         .contact-section {
             background: linear-gradient(180deg, #0f0f23 0%, #1a1a2e 100%);
             padding: 100px 0;
+            position: relative;    /* ← ADD THIS LINE */
+            overflow: hidden;
+        }
+        /* ADD FLOWING WAVES - Place this RIGHT AFTER the @keyframes aboutLineFlow block */
+        
+        /* Flowing Wave Pattern - Second Layer */
+        .contact-section::after {
+            content: '';
+            position: absolute;
+            bottom: 30%;
+            right: 0%;
+            width: 100%;
+            height: 300px;
+            background: 
+                radial-gradient(ellipse at 20% 50%, rgba(176, 112, 221, 0.2) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 30%, rgba(32, 80, 224, 0.15) 0%, transparent 40%),
+                radial-gradient(ellipse at 50% 80%, rgba(96, 192, 255, 0.2) 0%, transparent 60%);
+            clip-path: path('M0,100 C200,50 400,150 600,100 C800,50 1000,150 1200,100 C1400,50 1600,150 1800,100 L1800,1200 L0,1200 Z');
+            transform: rotate(-3deg);
+            animation: contactWaveFlow 18s ease-in-out infinite;
+            z-index: 2;
+        }
+
+        /* Wave Animation */
+        @keyframes contactWaveFlow {
+            0%, 100% { 
+                transform: rotate(-3deg) translateY(0); 
+                opacity: 0.4; 
+            }
+            50% { 
+                transform: rotate(-3deg) translateY(-20px); 
+                opacity: 0.7; 
+            }
         }
 
         .contact-container {
@@ -715,7 +843,10 @@
             margin: 0 auto;
             padding: 0 20px;
             text-align: center;
+            position: relative;    
+            z-index: 10;          
         }
+        
 
         .contact-content {
             background: rgba(255, 255, 255, 0.05);
@@ -1101,11 +1232,11 @@
                 <div class="contact-info">
                     <div class="contact-item">
                         <h4>📧 Email</h4>
-                        <p>hello@controlbia.com</p>
+                        <p>info@controlbia.com</p>
                     </div>
                     <div class="contact-item">
                         <h4>📞 Phone</h4>
-                        <p>+1 (555) 123-4567</p>
+                        <p>+1 (561) 306-2825</p>
                     </div>
 
                 </div>
