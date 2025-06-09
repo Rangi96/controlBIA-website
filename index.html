@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Control BIA - Visualization & Analytics</title>
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         html {
             scroll-behavior: smooth;
         }
@@ -12,263 +16,77 @@
         body {
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             overflow-y: auto;
             overflow-x: hidden;
-            background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%);
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
             color: white;
             min-height: 100vh;
         }
 
-        .dashboards-section {
-            background: linear-gradient(180deg, #182848 0%, #4b6cb7 100%);
-            padding: 80px 0;
-            min-height: 100vh;
-        }
 
-        .dashboards-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .dashboards-container h2 {
-            text-align: center;
-            font-size: 2.5em;
-            margin-bottom: 60px;
-            color: #2050E0;
-        }
-
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
-            margin-bottom: 40px;
-        }
-
-        .dashboard-item {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 20px;
-            backdrop-filter: blur(10px);
-            height: 600px;
-        }
-
-        .dashboard-title {
-            color: #B070DD;
-            font-size: 1.5em;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-
-        .dashboard-frame-wrapper {
-            position: relative;
-            width: 100%;
-            height: 500px;
-            margin-bottom: 20px;
-        }
-
-        .dashboard-frame {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-            border-radius: 10px;
-            background: white;
-        }
-
-        @media (max-width: 1024px) {
-            .dashboard-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .dashboard-frame-wrapper {
-                height: 400px;
-            }
-            
-            .dashboard-item {
-                height: 500px;
-            }
-        }
-
-        .video-section {
-            background: linear-gradient(180deg, #1a1a1a 0%, #182848 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 80px 20px;
-        }
-
-        .video-container {
-            max-width: 1200px;
-            width: 100%;
-            text-align: center;
-        }
-
-        .video-content {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 40px;
-            backdrop-filter: blur(10px);
-            margin-bottom: 40px;
-        }
-
-        .video-wrapper {
-            position: relative;
-            width: 100%;
-            padding-bottom: 56.25%;
-            margin: 30px 0;
-        }
-
-        .video-wrapper iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border-radius: 10px;
-            border: none;
-        }
-
-        .video-title {
-            color: #2050E0;
-            font-size: 2.5em;
-            margin-bottom: 20px;
-        }
-
-        .video-description {
-            color: white;
-            font-size: 1.2em;
-            line-height: 1.6;
-            max-width: 800px;
-            margin: 0 auto 30px;
-        }
-
-        .video-cta {
-            display: inline-block;
-            background: #B070DD;
-            color: white;
-            padding: 15px 30px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            margin-top: 20px;
-        }
-
-        .video-cta:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(176, 112, 221, 0.4);
-        }
-
-        .services-section {
-            background: linear-gradient(180deg, #182848 0%, #4b6cb7 100%);
-            padding: 80px 0;
-            min-height: 100vh;
-        }
-
-        .services-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .services-container h2 {
-            text-align: center;
-            font-size: 2.5em;
-            margin-bottom: 60px;
-            color: #2050E0;
-        }
-
-        .services-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            padding: 20px;
-        }
-
-        .service-card {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 30px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            backdrop-filter: blur(10px);
-        }
-
-        .service-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .service-icon {
-            font-size: 3em;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .service-card h3 {
-            color: #B070DD;
-            font-size: 1.5em;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-
-        .service-card p {
-            color: white;
-            margin-bottom: 20px;
-            line-height: 1.6;
-        }
-
-        .service-features {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .service-features li {
-            padding: 8px 0;
-            color: rgba(255, 255, 255, 0.8);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .service-features li:last-child {
-            border-bottom: none;
-        }
-
-        @media (max-width: 768px) {
-            .services-cards {
-                grid-template-columns: 1fr;
-            }
-
-            .services-container h2 {
-                font-size: 2em;
-            }
-        }
-
+	/* SECTION 2: Navigation CSS Styles -- Enhanced Navigation */
         .nav-bar {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            background: rgba(24, 40, 72, 0.95);
-            padding: 20px;
+            background: rgba(15, 15, 35, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 15px 40px;
             display: flex;
-            justify-content: center;
-            gap: 30px;
+            justify-content: space-between;
+            align-items: center;
             z-index: 1000;
-            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .nav-bar.scrolled {
+            background: rgba(15, 15, 35, 0.95);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo {
+            font-size: 1.8em;
+            font-weight: bold;
+            background: linear-gradient(45deg, #2050E0, #B070DD);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
         }
 
         .nav-link {
             color: white;
             text-decoration: none;
-            font-size: 1.1em;
-            padding: 8px 16px;
-            border-radius: 20px;
+            font-size: 1em;
+            font-weight: 500;
+            padding: 12px 20px;
+            border-radius: 25px;
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .nav-link:hover::before {
+            left: 100%;
         }
 
         .nav-link:hover {
@@ -276,21 +94,57 @@
             transform: translateY(-2px);
         }
 
-        .section {
+        .cta-button {
+            background: linear-gradient(45deg, #2050E0, #B070DD);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(32, 80, 224, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(32, 80, 224, 0.5);
+        }
+
+        /* Mobile menu */
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .mobile-menu-btn span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+
+	/* SECTION 3: Hero Section CSS -- Enhanced Navigation */
+	
+	.section {
             min-height: 100vh;
             scroll-margin-top: 80px;
         }
 
-        .content-container {
+        /* Enhanced Hero Section */
+        .hero-section {
             display: flex;
             width: 100vw;
             height: 100vh;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%);
         }
 
         .visualization-container {
             width: 50%;
             position: relative;
-            left: 0;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -306,25 +160,448 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding-right: 5%;
-            text-align: right;
+            padding: 0 60px 0 40px;
+            text-align: left;
         }
 
-        h1 {
-            font-size: 3.5em;
-            margin-bottom: 20px;
-            line-height: 1.2;
+        .hero-title {
+            font-size: 4em;
+            font-weight: 700;
+            margin-bottom: 30px;
+            line-height: 1.1;
+            background: linear-gradient(45deg, #2050E0, #B070DD, #00D4FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: titleGlow 3s ease-in-out infinite alternate;
         }
 
-        p {
-            font-size: 1.2em;
+        @keyframes titleGlow {
+            0% { filter: brightness(1); }
+            100% { filter: brightness(1.2); }
+        }
+
+        .hero-subtitle {
+            font-size: 1.4em;
             line-height: 1.6;
             opacity: 0.9;
+            margin-bottom: 40px;
+            color: #e0e0e0;
         }
 
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #2050E0, #B070DD);
+            color: white;
+            padding: 16px 32px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 6px 20px rgba(32, 80, 224, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(32, 80, 224, 0.6);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            padding: 16px 32px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 30px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-3px);
+        }
+
+	/* SECTION 4: Stats Section CSS -- Enhanced Navigation */
+	/* Stats Section */
+        .stats-section {
+            background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
+            padding: 80px 0;
+        }
+
+        .stats-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 30px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .stat-number {
+            font-size: 3em;
+            font-weight: bold;
+            background: linear-gradient(45deg, #2050E0, #B070DD);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1.1em;
+            color: #e0e0e0;
+        }
+	/* SECTION 5: About Section CSS -- Enhanced Navigation */
+	/* Enhanced About Section */
+        .about-section {
+            background: linear-gradient(180deg, #16213e 0%, #0f0f23 100%);
+            padding: 100px 0;
+        }
+
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            font-size: 3em;
+            text-align: center;
+            margin-bottom: 60px;
+            background: linear-gradient(45deg, #2050E0, #B070DD);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            margin-bottom: 80px;
+        }
+
+        .about-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #2050E0, #B070DD);
+        }
+
+        .about-item:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .about-item h3 {
+            color: #2050E0;
+            margin-bottom: 20px;
+            font-size: 1.6em;
+        }
+
+        .about-item p {
+            line-height: 1.7;
+            color: #e0e0e0;
+        }
+	/* SECTION 6: Services Section CSS -- Enhanced Navigation */
+	/* Enhanced Services Section */
+        .services-section {
+            background: linear-gradient(180deg, #0f0f23 0%, #1a1a2e 100%);
+            padding: 100px 0;
+        }
+
+        .services-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .service-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 25px;
+            padding: 40px;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(32, 80, 224, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.5s ease;
+            opacity: 0;
+        }
+
+        .service-card:hover::before {
+            opacity: 1;
+            transform: rotate(45deg) translate(50%, 50%);
+        }
+
+        .service-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .service-icon {
+            font-size: 4em;
+            margin-bottom: 25px;
+            text-align: center;
+            filter: drop-shadow(0 0 10px rgba(32, 80, 224, 0.5));
+        }
+
+        .service-card h3 {
+            color: #B070DD;
+            font-size: 1.6em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .service-card p {
+            color: #e0e0e0;
+            margin-bottom: 25px;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        .service-features {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .service-features li {
+            padding: 12px 0;
+            color: rgba(255, 255, 255, 0.8);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .service-features li::before {
+            content: '▶';
+            position: absolute;
+            left: 0;
+            color: #2050E0;
+            font-size: 0.8em;
+        }
+
+        .service-features li:hover {
+            color: white;
+            padding-left: 25px;
+        }
+
+        .service-features li:last-child {
+            border-bottom: none;
+        }
+	/* SECTION 7: Video Section CSS -- Enhanced Navigation */
+	/* Enhanced Video Section */
+        .video-section {
+            background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
+            padding: 100px 0;
+        }
+
+        .video-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .video-content {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 30px;
+            padding: 60px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            margin: 40px 0;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+	/* SECTION 8: Dashboard Section CSS -- Enhanced Navigation */
+	/* Enhanced Dashboard Section */
+        .dashboards-section {
+            background: linear-gradient(180deg, #16213e 0%, #0f0f23 100%);
+            padding: 100px 0;
+        }
+
+        .dashboards-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .dashboard-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 25px;
+            padding: 30px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            height: 650px;
+            transition: all 0.3s ease;
+        }
+
+        .dashboard-item:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .dashboard-title {
+            color: #B070DD;
+            font-size: 1.6em;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .dashboard-frame-wrapper {
+            position: relative;
+            width: 100%;
+            height: 550px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .dashboard-frame {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: white;
+        }
+	/* SECTION 9: Contact Section and Footer CSS -- Enhanced Navigation */
+	/* Contact Section */
+        .contact-section {
+            background: linear-gradient(180deg, #0f0f23 0%, #1a1a2e 100%);
+            padding: 100px 0;
+        }
+
+        .contact-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .contact-content {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 30px;
+            padding: 60px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .contact-item {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-5px);
+        }
+	/* SECTION 10: Responsive Design CSS -- Enhanced Navigation */
+	/* Responsive Design */
         @media (max-width: 1024px) {
-            .content-container {
+            .hero-section {
                 flex-direction: column;
+                height: auto;
+                min-height: 100vh;
             }
 
             .visualization-container,
@@ -335,313 +612,446 @@
 
             .text-content {
                 text-align: center;
-                padding: 20px 5%;
+                padding: 60px 40px;
             }
 
-            h1 {
-                font-size: 2.5em;
+            .hero-title {
+                font-size: 3em;
             }
-        }
 
-        .about-section {
-            background: linear-gradient(180deg, #182848 0%, #1a1a1a 100%);
-            padding: 80px 0;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-        }
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
 
-        .about-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .about-content {
-            color: white;
-        }
-
-        .about-content h2 {
-            font-size: 2.5em;
-            margin-bottom: 40px;
-            text-align: center;
-        }
-
-        .about-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
-            margin-bottom: 60px;
-        }
-
-        .about-item {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 30px;
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
-            transition: transform 0.3s ease;
-        }
-
-        .about-item:hover {
-            transform: translateY(-5px);
-        }
-
-        .about-item h3 {
-            color: #2050E0;
-            margin-bottom: 15px;
-            font-size: 1.5em;
-        }
-
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-        }
-
-        .service-item {
-            text-align: center;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 10px;
-            transition: all 0.3s ease;
-        }
-
-        .service-item:hover {
-            background: rgba(255, 255, 255, 0.08);
-        }
-
-        .service-item h4 {
-            color: white;
-            margin-bottom: 10px;
-            font-size: 1.2em;
-        }
-
-        .service-item p {
-            font-size: 0.9em;
-            opacity: 0.8;
-        }
-
-        @media (max-width: 1024px) {
             .about-grid {
                 grid-template-columns: 1fr;
             }
 
-            .services-grid {
+            .stats-container {
                 grid-template-columns: repeat(2, 1fr);
-            }
-
-            .about-content h2 {
-                font-size: 2em;
+                gap: 30px;
             }
         }
 
         @media (max-width: 768px) {
-            .services-grid {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: flex;
+            }
+
+            .hero-title {
+                font-size: 2.5em;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2em;
+            }
+
+            .stats-container {
                 grid-template-columns: 1fr;
             }
 
-            .about-section {
-                padding: 40px 0;
+            .section-title {
+                font-size: 2.2em;
+            }
+
+            .service-card,
+            .about-item,
+            .video-content,
+            .contact-content {
+                padding: 30px;
+            }
+
+            .dashboard-item {
+                height: 500px;
+            }
+
+            .dashboard-frame-wrapper {
+                height: 400px;
             }
         }
+
+        /* Scroll animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Loading animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #2050E0;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
     </style>
 </head>
 <body>
-    <nav class="nav-bar">
-        <a href="#home" class="nav-link">Home</a>
-        <a href="#about" class="nav-link">About</a>
-        <a href="#video" class="nav-link">Our Story</a>
-        <a href="#services" class="nav-link">Services</a>
-        <a href="#dashboards" class="nav-link">Dashboards</a>
-    </nav>
+	<!--/* SECTION 11: Navigation HTML and Particles */-->
 
-    <div id="home" class="content-container section">
-        <div class="visualization-container" id="visualization-container">
+
+<!-- Enhanced Navigation -->
+    <nav class="nav-bar" id="navbar">
+        <div class="logo">Control BIA</div>
+        <div class="nav-links">
+            <a href="#home" class="nav-link">Home</a>
+            <a href="#about" class="nav-link">About</a>
+            <a href="#services" class="nav-link">Services</a>
+            <a href="#video" class="nav-link">Our Story</a>
+            <a href="#dashboards" class="nav-link">Financial Intelligence</a>
+            <a href="#contact" class="cta-button">Get Started</a>
         </div>
-
+        <div class="mobile-menu-btn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+	<!--/* SECTION 12: Hero Section HTML */-->
+<!-- Enhanced Hero Section -->
+    <div id="home" class="hero-section section">
+        <div class="visualization-container" id="visualization-container">
+            <!-- 3D visualization will be rendered here -->
+        </div>
         <div class="text-content">
-            <h1>Visualization, Automation & Analytics</h1>
-            <p>We empower companies to make data-driven decisions through expert business intelligence and automation solutions.</p>
+            <h1 class="hero-title">Transform Financial Data Into Strategic Decisions</h1>
+            <p class="hero-subtitle">We combine expert accounting services with cutting-edge business intelligence to help companies not just meet their financial obligations, but discover opportunities for growth and optimization.</p>
+            <div class="hero-buttons">
+                <a href="#contact" class="btn-primary">Start Your Transformation</a>
+                <a href="#about" class="btn-secondary">Learn More</a>
+            </div>
         </div>
     </div>
-
+	<!--/* SECTION 13: Stats Section HTML */-->
+<!-- Stats Section -->
+    <div class="stats-section">
+        <div class="stats-container">
+            <div class="stat-item fade-in">
+                <div class="stat-number" data-count="200">0</div>
+                <div class="stat-label">Clients Served</div>
+            </div>
+            <div class="stat-item fade-in">
+                <div class="stat-number" data-count="99">0</div>
+                <div class="stat-label">% Accuracy Rate</div>
+            </div>
+            <div class="stat-item fade-in">
+                <div class="stat-number" data-count="10">0</div>
+                <div class="stat-label">Years Experience</div>
+            </div>
+            <div class="stat-item fade-in">
+                <div class="stat-number" data-count="45">0</div>
+                <div class="stat-label">% Faster Reporting</div>
+            </div>
+        </div>
+    </div>
+	<!--/* SECTION 14: About Section HTML */-->
+<!-- Enhanced About Section -->
     <div id="about" class="about-section section">
         <div class="about-container">
-            <div class="about-content">
-                <h2>About Us</h2>
-                <div class="about-grid">
-                    <div class="about-item">
-                        <h3>Our Vision</h3>
-                        <p>To revolutionize decision-making through data, empowering businesses to thrive in the digital age. We believe that every business decision should be backed by robust analytics and actionable insights.</p>
-                    </div>
-                    <div class="about-item">
-                        <h3>Our Expertise</h3>
-                        <p>With over a decade of experience in data analytics, business intelligence, and machine learning, we've helped hundreds of organizations transform their data into strategic assets.</p>
-                    </div>
-                    <div class="about-item">
-                        <h3>Our Approach</h3>
-                        <p>We combine cutting-edge technology with industry best practices to deliver customized solutions that address your specific business challenges. Our collaborative approach ensures that you're involved at every step.</p>
-                    </div>
-                    <div class="about-item">
-                        <h3>Our Impact</h3>
-                        <p>Our solutions have helped clients achieve an average of 35% improvement in operational efficiency and a 40% reduction in decision-making time through data-driven insights.</p>
-                    </div>
+            <h2 class="section-title fade-in">About Control BIA</h2>
+            <div class="about-grid">
+                <div class="about-item fade-in">
+                    <h3>Our Mission</h3>
+                    <p>To bridge the gap between traditional accounting excellence and modern business intelligence, empowering companies to transform their financial data into strategic competitive advantages that drive sustainable growth.</p>
+                </div>
+                <div class="about-item fade-in">
+                    <h3>Our Expertise</h3>
+                    <p>With over a decade of experience in accounting and financial management, enhanced by cutting-edge analytics capabilities, we help businesses move from reactive compliance to proactive strategic planning through data-driven insights.</p>
+                </div>
+                <div class="about-item fade-in">
+                    <h3>Our Approach</h3>
+                    <p>We believe that accurate accounting forms the foundation for meaningful analytics. Our integrated approach ensures your financial data is not only compliant and accurate but also transformed into actionable intelligence for better decision-making.</p>
+                </div>
+                <div class="about-item fade-in">
+                    <h3>Our Value</h3>
+                    <p>Our clients achieve an average of 45% faster financial reporting and 35% improvement in strategic decision-making speed by combining our accounting accuracy with advanced business intelligence capabilities.</p>
                 </div>
             </div>
         </div>
     </div>
+	<!--/* SECTION 15: Services Section HTML */-->
+<!-- Enhanced Services Section -->
+    <div id="services" class="services-section section">
+        <div class="services-container">
+            <h2 class="section-title fade-in">Our Services</h2>
+            <div class="services-grid">
+                <div class="service-card fade-in">
+                    <div class="service-icon">📊</div>
+                    <h3>Accounting & Bookkeeping</h3>
+                    <p>Comprehensive accounting services enhanced with real-time reporting and analytical insights to keep your finances accurate and your business informed.</p>
+                    <ul class="service-features">
+                        <li>Monthly Financial Statements with Analytics</li>
+                        <li>Accounts Payable/Receivable Management</li>
+                        <li>Real-time Cash Flow Monitoring</li>
+                        <li>Automated Bookkeeping Solutions</li>
+                        <li>Financial Compliance & Audit Support</li>
+                    </ul>
+                </div>
 
+                <div class="service-card fade-in">
+                    <div class="service-icon">📈</div>
+                    <h3>Financial Intelligence & Reporting</h3>
+                    <p>Transform your financial data into strategic insights with interactive dashboards, predictive analytics, and executive-level reporting.</p>
+                    <ul class="service-features">
+                        <li>Interactive Financial Dashboards</li>
+                        <li>Budget vs. Actual Analysis</li>
+                        <li>Cash Flow Forecasting</li>
+                        <li>KPI Tracking & Alerts</li>
+                        <li>Executive Summary Reports</li>
+                    </ul>
+                </div>
+
+                <div class="service-card fade-in">
+                    <div class="service-icon">🎯</div>
+                    <h3>Strategic Financial Advisory</h3>
+                    <p>Combine accounting expertise with business intelligence to provide strategic guidance that drives growth and operational efficiency.</p>
+                    <ul class="service-features">
+                        <li>Virtual CFO Services</li>
+                        <li>Financial Planning & Analysis</li>
+                        <li>Business Performance Reviews</li>
+                        <li>Working Capital Optimization</li>
+                        <li>Growth Strategy Support</li>
+                    </ul>
+                </div>
+
+                <div class="service-card fade-in">
+                    <div class="service-icon">🔄</div>
+                    <h3>Process Automation & Integration</h3>
+                    <p>Streamline your financial operations with automated workflows and seamless integration between accounting systems and analytics platforms.</p>
+                    <ul class="service-features">
+                        <li>Accounting System Integration</li>
+                        <li>Automated Financial Workflows</li>
+                        <li>Data Migration & Cleanup</li>
+                        <li>Custom Dashboard Development</li>
+                        <li>System Training & Support</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+	<!--/* SECTION 16: Video Section HTML */-->
+<!-- Enhanced Video Section -->
     <div id="video" class="video-section section">
         <div class="video-container">
-            <div class="video-content">
-                <h2 class="video-title">Our Story</h2>
-                <p class="video-description">Discover how we're transforming businesses through the power of data analytics and intelligent automation. Join us on our journey to create a more data-driven future.</p>
+            <div class="video-content fade-in">
+                <h2 class="section-title">Our Story</h2>
+                <p class="hero-subtitle">Discover how we're transforming businesses by combining trusted accounting expertise with cutting-edge financial intelligence. See how we help companies move from month-end reporting to real-time decision support.</p>
                 
                 <div class="video-wrapper">
                     <iframe 
                         src="https://www.youtube.com/embed/rsTsqS4Kz6g"
-                        title="Corporate Video"
+                        title="Control BIA - Financial Intelligence Story"
                         frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen
-                        width="100%"
-                        height="100%">
+                        allowfullscreen>
                     </iframe>
                 </div>
 
-                <a href="#contact" class="video-cta">Get in Touch</a>
+                <a href="#contact" class="btn-primary">Transform Your Financial Operations</a>
             </div>
         </div>
     </div>
 
-    <div id="services" class="services-section section">
-        <div class="services-container">
-            <h2>Our Services</h2>
-            <div class="services-cards">
-                <div class="service-card">
-                    <div class="service-icon">📊</div>
-                    <h3>Data Analytics</h3>
-                    <p>Transform raw data into actionable insights with our comprehensive analytics solutions.</p>
-                    <ul class="service-features">
-                        <li>Predictive Analytics</li>
-                        <li>Business Intelligence</li>
-                        <li>Data Visualization</li>
-                        <li>Statistical Analysis</li>
-                    </ul>
-                </div>
-
-                <div class="service-card">
-                    <div class="service-icon">🤖</div>
-                    <h3>Process Automation</h3>
-                    <p>Streamline your operations with intelligent automation solutions.</p>
-                    <ul class="service-features">
-                        <li>Workflow Automation</li>
-                        <li>RPA Implementation</li>
-                        <li>Process Optimization</li>
-                        <li>Custom Automation Tools</li>
-                    </ul>
-                </div>
-
-                <div class="service-card">
-                    <div class="service-icon">🎯</div>
-                    <h3>Strategy Consulting</h3>
-                    <p>Develop data-driven strategies to achieve your business objectives.</p>
-                    <ul class="service-features">
-                        <li>Digital Transformation</li>
-                        <li>Data Strategy</li>
-                        <li>Technology Roadmap</li>
-                        <li>Change Management</li>
-                    </ul>
-                </div>
-
-                <div class="service-card">
-                    <div class="service-icon">🔄</div>
-                    <h3>Integration Services</h3>
-                    <p>Seamlessly connect your systems and data sources.</p>
-                    <ul class="service-features">
-                        <li>API Development</li>
-                        <li>System Integration</li>
-                        <li>Data Migration</li>
-                        <li>Cloud Solutions</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
+	<!--/* SECTION 17: Dashboard Section HTML */-->
+<!-- Enhanced Dashboard Section -->
     <div id="dashboards" class="dashboards-section section">
         <div class="dashboards-container">
-            <h2>Interactive Dashboards</h2>
+            <h2 class="section-title fade-in">Financial Intelligence Dashboards</h2>
+            <p style="text-align: center; font-size: 1.2em; color: #e0e0e0; margin-bottom: 40px;">See how we transform complex financial data into clear, actionable insights that drive better business decisions.</p>
             <div class="dashboard-grid">
-                <div class="dashboard-item">
-                    <h3 class="dashboard-title">TMDB Analytics</h3>
+                <div class="dashboard-item fade-in">
+                    <h3 class="dashboard-title">📊 Financial Performance Analytics</h3>
                     <div class="dashboard-frame-wrapper">
                         <iframe 
                             class="dashboard-frame"
                             src="https://app.powerbi.com/view?r=eyJrIjoiYjYwNDZjNGYtNzI0Yy00Zjc4LWE5ZmItOTAwZTYyMTY3N2MyIiwidCI6IjU4MGQzNWExLWE2Y2EtNDcwYS1hNTY3LTc0OGI0OTI0MzAyOCIsImMiOjJ9"
                             frameborder="0"
                             allowFullScreen="true"
-                            width="100%"
-                            height="100%">
+                            loading="lazy">
                         </iframe>
                     </div>
                 </div>
 
-                <div class="dashboard-item">
-                    <h3 class="dashboard-title">Sales Performance</h3>
+                <div class="dashboard-item fade-in">
+                    <h3 class="dashboard-title">💰 Revenue & Cash Flow Intelligence</h3>
                     <div class="dashboard-frame-wrapper">
                         <iframe 
                             class="dashboard-frame"
                             src="https://app.powerbi.com/view?r=eyJrIjoiZTAyZDUyYWYtOTE5OS00ZTMyLTk5ZmMtNjI5ZTUyZTE0OWVmIiwidCI6IjU4MGQzNWExLWE2Y2EtNDcwYS1hNTY3LTc0OGI0OTI0MzAyOCIsImMiOjJ9"
                             frameborder="0"
                             allowFullScreen="true"
-                            width="100%"
-                            height="100%">
+                            loading="lazy">
                         </iframe>
                     </div>
                 </div>
 
-                <div class="dashboard-item">
-                    <h3 class="dashboard-title">Monthly Closing Report</h3>
+                <div class="dashboard-item fade-in">
+                    <h3 class="dashboard-title">📈 Executive Financial Summary</h3>
                     <div class="dashboard-frame-wrapper">
                         <iframe 
                             class="dashboard-frame"
                             src="https://app.powerbi.com/view?r=eyJrIjoiYmE0YzljYjctODEyYS00YmQ5LWJiYmYtZTY3YmE0OWYwZjQ3IiwidCI6IjU4MGQzNWExLWE2Y2EtNDcwYS1hNTY3LTc0OGI0OTI0MzAyOCIsImMiOjJ9"
                             frameborder="0"
                             allowFullScreen="true"
-                            width="100%"
-                            height="100%">
+                            loading="lazy">
                         </iframe>
                     </div>
                 </div>
 
-                <div class="dashboard-item">
-                    <h3 class="dashboard-title">Spotify Analytics</h3>
+                <div class="dashboard-item fade-in">
+                    <h3 class="dashboard-title">🎯 Business Intelligence Insights</h3>
                     <div class="dashboard-frame-wrapper">
                         <iframe 
                             class="dashboard-frame"
                             src="https://app.powerbi.com/view?r=eyJrIjoiY2Q0NDg4NjctODA4ZS00OWYwLWFlNzItNDQyM2EwNDk5MmU3IiwidCI6IjU4MGQzNWExLWE2Y2EtNDcwYS1hNTY3LTc0OGI0OTI0MzAyOCIsImMiOjJ9"
                             frameborder="0"
                             allowFullScreen="true"
-                            width="100%"
-                            height="100%">
+                            loading="lazy">
                         </iframe>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
+	<!--/* SECTION 18: Contact Section HTML */-->
+<!-- Contact Section -->
+    <div id="contact" class="contact-section section">
+        <div class="contact-container">
+            <div class="contact-content fade-in">
+                <h2 class="section-title">Ready to Transform Your Financial Operations?</h2>
+                <p class="hero-subtitle">Let's discuss how we can help you combine accounting accuracy with business intelligence insights to drive better decisions and accelerate growth.</p>
+                
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <h4>📧 Email</h4>
+                        <p>hello@controlbia.com</p>
+                    </div>
+                    <div class="contact-item">
+                        <h4>📞 Phone</h4>
+                        <p>+1 (555) 123-4567</p>
+                    </div>
+                    <div class="contact-item">
+                        <h4>🌐 Web</h4>
+                        <p>www.controlbia.com</p>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 40px;">
+                    <a href="mailto:hello@controlbia.com" class="btn-primary">Start Your Financial Transformation</a>
+                </div>
+            </div>
+        </div>
+    </div>
+	<!--/* SECTION 19: Footer HTML */-->
+<!-- Footer -->
+    <footer style="background: #0f0f23; padding: 40px 0; text-align: center; border-top: 1px solid rgba(255, 255, 255, 0.1);">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+            <div class="logo" style="margin-bottom: 20px; font-size: 1.5em;">Control BIA</div>
+            <p style="color: rgba(255, 255, 255, 0.6); margin-bottom: 20px;">
+                Transforming businesses through data-driven intelligence and automation.
+            </p>
+            <div style="display: flex; justify-content: center; gap: 30px; margin-bottom: 20px;">
+                <a href="#home" style="color: rgba(255, 255, 255, 0.6); text-decoration: none;">Home</a>
+                <a href="#about" style="color: rgba(255, 255, 255, 0.6); text-decoration: none;">About</a>
+                <a href="#services" style="color: rgba(255, 255, 255, 0.6); text-decoration: none;">Services</a>
+                <a href="#dashboards" style="color: rgba(255, 255, 255, 0.6); text-decoration: none;">Dashboards</a>
+            </div>
+            <p style="color: rgba(255, 255, 255, 0.4); font-size: 0.9em;">
+                © 2025 Control BIA. All rights reserved.
+            </p>
+        </div>
+    </footer>
+	<!--/* SECTION 20: JavaScript - Part 1 (Three.js and Helper Functions) */-->
+<!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
-        // Wait for the DOM to be fully loaded
-        document.addEventListener('DOMContentLoaded', function() {
-            const scene = new THREE.Scene();
+
+        // Navbar scroll effect
+        function handleNavbarScroll() {
+            const navbar = document.getElementById('navbar');
+            const scrolled = window.scrollY > 50;
+            navbar.classList.toggle('scrolled', scrolled);
+        }
+
+        // Smooth scroll for navigation links
+        function setupSmoothScroll() {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        }
+
+        // Intersection Observer for animations
+        function setupScrollAnimations() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.fade-in').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        // Counter animation
+        function animateCounters() {
+            const counters = document.querySelectorAll('[data-count]');
+            const speed = 200;
+
+            counters.forEach(counter => {
+                const target = +counter.getAttribute('data-count');
+                const count = +counter.innerText;
+                const inc = target / speed;
+
+                if (count < target) {
+                    counter.innerText = Math.ceil(count + inc);
+                    setTimeout(() => animateCounters(), 1);
+                } else {
+                    counter.innerText = target;
+                }
+            });
+        }
+
+	<!--/* SECTION 21: JavaScript - Part 2 (3D Visualization) */-->
+// Enhanced 3D Visualization
+        function init3DVisualization() {
             const container = document.getElementById('visualization-container');
-            
-            // If container doesn't exist yet, exit
             if (!container) return;
-            
+
+            const scene = new THREE.Scene();
             const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
             const renderer = new THREE.WebGLRenderer({ 
                 antialias: true,
@@ -652,111 +1062,123 @@
             renderer.setClearColor(0x000000, 0);
             container.appendChild(renderer.domElement);
 
-            const ambientLight = new THREE.AmbientLight(0xffffff, 1.5);
+            // ===================================
+            // BRIGHTNESS CONTROLS - MODIFY THESE VALUES
+            // ===================================
+            const AMBIENT_BRIGHTNESS = 0.8;      // Overall brightness (0.1 = very dark, 1.5 = very bright)
+            const MAIN_LIGHT_BRIGHTNESS = 0.6;   // Main light intensity
+            const SIDE_LIGHT_BRIGHTNESS = 0.4;   // Side lights intensity
+            const GLOW_BRIGHTNESS = 0.3;        // Bar glow effect (0 = no glow, 0.2 = strong glow)
+            
+            // Lighting setup
+            const ambientLight = new THREE.AmbientLight(0xffffff, AMBIENT_BRIGHTNESS);
             scene.add(ambientLight);
 
-            const lights = [
-                { pos: [5, 5, 5], intensity: 1.0 },
-                { pos: [-5, 5, 5], intensity: 1.0 },
-                { pos: [0, 5, -5], intensity: 1.0 },
-                { pos: [0, -5, 5], intensity: 1.0 }
-            ];
+            const directionalLight1 = new THREE.DirectionalLight(0xB070DD, MAIN_LIGHT_BRIGHTNESS);
+            directionalLight1.position.set(5, 10, 5);
+            scene.add(directionalLight1);
 
-            lights.forEach(light => {
-                const directionalLight = new THREE.DirectionalLight(0xffffff, light.intensity);
-                directionalLight.position.set(...light.pos);
-                scene.add(directionalLight);
-            });
+            const directionalLight2 = new THREE.DirectionalLight(0xB070DD, SIDE_LIGHT_BRIGHTNESS);
+            directionalLight2.position.set(-5, 5, 5);
+            scene.add(directionalLight2);
 
+            const directionalLight3 = new THREE.DirectionalLight(0xB070DD, SIDE_LIGHT_BRIGHTNESS);
+            directionalLight3.position.set(0, -5, 3);
+            scene.add(directionalLight3);
+
+            // ===================================
+            // SPACING CONTROLS - MODIFY THESE VALUES
+            // ===================================
+            const BAR_SPACING = 4.0;              // Distance between bars (4.0 = closer, 6.0 = further apart)
+            
+            // Bar proportions (same as original)
+            const barGroup = new THREE.Group();
             const middleBarHeight = 10.5;
-            const sideBarHeight = middleBarHeight * 0.7;
+            const sideBarHeight = middleBarHeight * 0.7; // 7.35
             const sideBarStart = middleBarHeight * 0.15;
             const sideBarYOffset = sideBarStart - middleBarHeight / 2 + sideBarHeight / 2;
 
-            const barGeometries = [
-                new THREE.BoxGeometry(3.5, sideBarHeight, 3.5, 32, 32, 32),
-                new THREE.BoxGeometry(3.5, middleBarHeight, 3.5, 32, 32, 32),
-                new THREE.BoxGeometry(3.5, sideBarHeight, 3.5, 32, 32, 32),
-            ];
-
-            function increaseSaturation(hex, factor = 1.2) {
-                const color = new THREE.Color(hex);
-                const hsl = {};
-                color.getHSL(hsl);
-                return new THREE.Color().setHSL(hsl.h, Math.min(1, hsl.s * factor), hsl.l);
-            }
-
-            function createBrushedMetalMaterial(color) {
-                const saturatedColor = increaseSaturation(color);
-                return new THREE.MeshPhysicalMaterial({
-                    color: saturatedColor,
-                    metalness: 0.75,
-                    roughness: 0.3,
-                    reflectivity: 0.9,
-                    clearcoat: 0.4,
-                    clearcoatRoughness: 0.3,
-                    emissive: saturatedColor,
-                    emissiveIntensity: 0.15
-                });
-            }
-
-            const materials = [
-                createBrushedMetalMaterial(0x2050E0), // Blue
-                createBrushedMetalMaterial(0xB070DD), // Purple
-                createBrushedMetalMaterial(0xBFBFBF)  // Gray
-            ];
-
-            const bars = [];
-            barGeometries.forEach((geometry, index) => {
-                const bar = new THREE.Mesh(geometry, materials[index]);
-                
-                if (index === 1) {
-                    bar.position.set(index * 4 - 3.5, 0, 0);
-                } else {
-                    bar.position.set(index * 4 - 3.5, sideBarYOffset, 0);
+            const barData = [
+                { 
+                    height: sideBarHeight, 
+                    color: 0x3060F0, // Blue
+                    x: -BAR_SPACING,  // Left bar position
+                    y: sideBarYOffset,
+                    name: 'Analytics' 
+                },
+                { 
+                    height: middleBarHeight, 
+                    color: 0xC080E0, // Purple
+                    x: 0,             // Middle bar position
+                    y: 0,
+                    name: 'Intelligence' 
+                },
+                { 
+                    height: sideBarHeight, 
+                    color: 0x60C0FF, // Cyan
+                    x: BAR_SPACING,   // Right bar position
+                    y: sideBarYOffset,
+                    name: 'Automation' 
                 }
+            ];
 
-                scene.add(bar);
-                bars.push(bar);
+            // ===================================
+            // BAR MATERIAL CONTROLS - MODIFY THESE VALUES
+            // ===================================
+            const METALNESS = 0.6;        // How metallic the bars look (0 = matte, 1 = mirror)
+            const ROUGHNESS = 0.4;        // How rough the surface is (0 = smooth, 1 = rough)
+            const REFLECTIVITY = 0.8;     // How reflective the bars are
+
+            barData.forEach((bar, index) => {
+                const geometry = new THREE.BoxGeometry(3.5, bar.height, 3.5, 16, 16, 16);
+                const material = new THREE.MeshPhysicalMaterial({
+                    color: bar.color,
+                    metalness: METALNESS,
+                    roughness: ROUGHNESS,
+                    reflectivity: REFLECTIVITY,
+                    clearcoat: 0.3,
+                    clearcoatRoughness: 0.4,
+                    emissive: bar.color,
+                    emissiveIntensity: GLOW_BRIGHTNESS  // Uses the brightness control
+                });
+
+                const mesh = new THREE.Mesh(geometry, material);
+                mesh.position.set(bar.x, bar.y, 0);
+                barGroup.add(mesh);
             });
 
-            const group = new THREE.Group();
-            bars.forEach(bar => group.add(bar));
-            scene.add(group);
-
+            scene.add(barGroup);
             camera.position.z = 15;
 
+            // Mouse interaction
             let mouseX = 0, mouseY = 0;
-            let targetRotationX = 0;
-            let targetRotationY = 0;
-            let currentRotationX = 0;
-            let currentRotationY = 0;
+            let targetRotationX = 0, targetRotationY = 0;
+            let currentRotationX = 0, currentRotationY = 0;
 
             const maxRotation = Math.PI / 7;
 
-            document.addEventListener('mousemove', (event) => {
+            container.addEventListener('mousemove', (event) => {
                 const rect = container.getBoundingClientRect();
-                const x = event.clientX - rect.left;
-                const y = event.clientY - rect.top;
-                
-                mouseX = (x / rect.width) * 2 - 1;
-                mouseY = -(y / rect.height) * 2 + 1;
+                mouseX = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+                mouseY = -((event.clientY - rect.top) / rect.height) * 2 + 1;
                 
                 targetRotationY = Math.max(Math.min(mouseX * 0.8, maxRotation), -maxRotation);
                 targetRotationX = Math.max(Math.min(mouseY * 0.8, maxRotation), -maxRotation);
             });
 
+            // Animation loop
             function animate() {
                 currentRotationX += (targetRotationX - currentRotationX) * 0.01;
                 currentRotationY += (targetRotationY - currentRotationY) * 0.01;
 
-                group.rotation.x = currentRotationX;
-                group.rotation.y = currentRotationY;
+                barGroup.rotation.x = currentRotationX;
+                barGroup.rotation.y = currentRotationY;
 
                 renderer.render(scene, camera);
                 requestAnimationFrame(animate);
             }
 
+            // Handle resize
             function handleResize() {
                 const rect = container.getBoundingClientRect();
                 camera.aspect = rect.width / rect.height;
@@ -765,9 +1187,73 @@
             }
 
             window.addEventListener('resize', handleResize);
-            handleResize();
             animate();
+        }
+
+	/* SECTION 22: JavaScript - Part 3 (Initialization and Event Listeners) */
+// Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            setupSmoothScroll();
+            setupScrollAnimations();
+            init3DVisualization();
+            
+            // Start counter animation when stats section is visible
+            const statsObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateCounters();
+                        statsObserver.unobserve(entry.target);
+                    }
+                });
+            });
+
+            const statsSection = document.querySelector('.stats-section');
+            if (statsSection) {
+                statsObserver.observe(statsSection);
+            }
+        });
+
+        window.addEventListener('scroll', handleNavbarScroll);
+
+        // Mobile menu functionality
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+
+        if (mobileMenuBtn && navLinks) {
+            mobileMenuBtn.addEventListener('click', () => {
+                navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+                navLinks.style.flexDirection = 'column';
+                navLinks.style.position = 'absolute';
+                navLinks.style.top = '100%';
+                navLinks.style.left = '0';
+                navLinks.style.right = '0';
+                navLinks.style.background = 'rgba(15, 15, 35, 0.95)';
+                navLinks.style.padding = '20px';
+                navLinks.style.borderRadius = '0 0 20px 20px';
+            });
+        }
+
+        // Lazy loading for iframes
+        const iframes = document.querySelectorAll('iframe[loading="lazy"]');
+        const iframeObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const iframe = entry.target;
+                    if (iframe.dataset.src) {
+                        iframe.src = iframe.dataset.src;
+                        iframe.removeAttribute('data-src');
+                    }
+                    iframeObserver.unobserve(iframe);
+                }
+            });
+        });
+
+        iframes.forEach(iframe => {
+            iframeObserver.observe(iframe);
         });
     </script>
+
+	<!--/* SECTION 23: Final Closing Tags */-->
+
 </body>
 </html>
