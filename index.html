@@ -1321,6 +1321,7 @@
 
             counters.forEach(counter => {
                 const target = +counter.getAttribute('data-count');
+		const suffix = counter.getAttribute('data-suffix') || '';
                 const count = +counter.innerText;
                 const inc = target / speed;
 
@@ -1328,7 +1329,7 @@
                     counter.innerText = Math.ceil(count + inc);
                     setTimeout(() => animateCounters(), 1);
                 } else {
-                    counter.innerText = target;
+                    counter.innerText = target + suffix;
                 }
             });
         }
