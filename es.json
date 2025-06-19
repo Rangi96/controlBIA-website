@@ -1,0 +1,115 @@
+{
+  "meta": {
+    "title": "Control BIA - Visualización y Análisis",
+    "description": "Transforme los Datos Financieros en Decisiones Estratégicas"
+  },
+  "nav": {
+    "home": "Inicio",
+    "about": "Acerca de",
+    "services": "Servicios",
+    "story": "Nuestra Historia",
+    "dashboards": "Inteligencia Financiera",
+    "getStarted": "Comenzar"
+  },
+  "hero": {
+    "title": "Transforme los Datos Financieros en Decisiones Estratégicas",
+    "subtitle": "Combinamos servicios expertos de contabilidad con inteligencia empresarial de vanguardia para ayudar a las empresas no solo a cumplir con sus obligaciones financieras, sino a descubrir oportunidades de crecimiento y optimización.",
+    "cta1": "Comience Su Transformación",
+    "cta2": "Más Información"
+  },
+  "stats": {
+    "projects": "Proyectos",
+    "experience": "Años de Experiencia",
+    "accuracy": "Tasa de Precisión",
+    "reporting": "Reportes Más Rápidos"
+  },
+  "about": {
+    "title": "Acerca de Control BIA",
+    "mission": {
+      "title": "Nuestra Misión",
+      "text": "Cerrar la brecha entre la excelencia contable tradicional y la inteligencia empresarial moderna, empoderando a las empresas para transformar sus datos financieros en ventajas competitivas estratégicas que impulsen el crecimiento sostenible."
+    },
+    "expertise": {
+      "title": "Nuestra Experiencia",
+      "text": "Con más de una década de experiencia en contabilidad y gestión financiera, mejorada con capacidades analíticas de vanguardia, ayudamos a las empresas a pasar del cumplimiento reactivo a la planificación estratégica proactiva a través de conocimientos basados en datos."
+    },
+    "approach": {
+      "title": "Nuestro Enfoque",
+      "text": "Creemos que la contabilidad precisa forma la base para análisis significativos. Nuestro enfoque integrado garantiza que sus datos financieros no solo sean conformes y precisos, sino que también se transformen en inteligencia accionable para una mejor toma de decisiones."
+    },
+    "value": {
+      "title": "Nuestro Valor",
+      "text": "Nuestros clientes logran un promedio de 45% más rápido en informes financieros y una mejora del 35% en la velocidad de toma de decisiones estratégicas al combinar nuestra precisión contable con capacidades avanzadas de inteligencia empresarial."
+    }
+  },
+  "services": {
+    "title": "Nuestros Servicios",
+    "accounting": {
+      "title": "Contabilidad y Teneduría de Libros",
+      "description": "Servicios integrales de contabilidad mejorados con informes en tiempo real y perspectivas analíticas para mantener sus finanzas precisas y su negocio informado.",
+      "features": [
+        "Estados Financieros Mensuales con Análisis",
+        "Gestión de Cuentas por Pagar/Cobrar",
+        "Monitoreo de Flujo de Caja en Tiempo Real",
+        "Soluciones Automatizadas de Contabilidad",
+        "Cumplimiento Financiero y Soporte de Auditoría"
+      ]
+    },
+    "intelligence": {
+      "title": "Inteligencia Financiera y Reportes",
+      "description": "Transforme sus datos financieros en perspectivas estratégicas con tableros interactivos, análisis predictivo e informes a nivel ejecutivo.",
+      "features": [
+        "Tableros Financieros Interactivos",
+        "Análisis de Presupuesto vs. Real",
+        "Pronóstico de Flujo de Caja",
+        "Seguimiento de KPI y Alertas",
+        "Informes Ejecutivos Resumidos"
+      ]
+    },
+    "advisory": {
+      "title": "Asesoría Financiera Estratégica",
+      "description": "Combine la experiencia contable con inteligencia empresarial para proporcionar orientación estratégica que impulse el crecimiento y la eficiencia operativa.",
+      "features": [
+        "Servicios de CFO Virtual",
+        "Planificación y Análisis Financiero",
+        "Revisiones de Desempeño Empresarial",
+        "Optimización del Capital de Trabajo",
+        "Soporte de Estrategia de Crecimiento"
+      ]
+    },
+    "automation": {
+      "title": "Automatización de Procesos e Integración",
+      "description": "Optimice sus operaciones financieras con flujos de trabajo automatizados e integración perfecta entre sistemas contables y plataformas analíticas.",
+      "features": [
+        "Integración de Sistemas Contables",
+        "Flujos de Trabajo Financieros Automatizados",
+        "Migración y Limpieza de Datos",
+        "Desarrollo de Tableros Personalizados",
+        "Capacitación y Soporte del Sistema"
+      ]
+    }
+  },
+  "video": {
+    "title": "Nuestra Historia",
+    "subtitle": "Descubra cómo estamos transformando empresas combinando experiencia contable confiable con inteligencia financiera de vanguardia. Vea cómo ayudamos a las empresas a pasar de informes de fin de mes a soporte de decisiones en tiempo real.",
+    "cta": "Transforme Sus Operaciones Financieras"
+  },
+  "dashboards": {
+    "title": "Tableros de Inteligencia Financiera",
+    "subtitle": "Vea cómo transformamos datos financieros complejos en perspectivas claras y accionables que impulsan mejores decisiones empresariales.",
+    "dashboard1": "📊 Análisis de Rendimiento Financiero",
+    "dashboard2": "💰 Inteligencia de Ingresos y Flujo de Caja",
+    "dashboard3": "🎯 Perspectivas de Inteligencia Empresarial"
+  },
+  "contact": {
+    "title": "¿Listo para Transformar Sus Operaciones Financieras?",
+    "subtitle": "Discutamos cómo podemos ayudarle a combinar la precisión contable con perspectivas de inteligencia empresarial para impulsar mejores decisiones y acelerar el crecimiento.",
+    "cta": "Reservar una Reunión",
+    "email": "📧 Correo Electrónico",
+    "phone": "📞 Teléfono"
+  },
+  "footer": {
+    "tagline": "Transformando empresas a través de inteligencia y automatización basada en datos.",
+    "rights": "Todos los derechos reservados."
+  }
+}
