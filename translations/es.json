@@ -66,17 +66,6 @@
         "Informes Ejecutivos Resumidos"
       ]
     },
-    "advisory": {
-      "title": "Asesoría Financiera Estratégica",
-      "description": "Combine la experiencia contable con inteligencia empresarial para proporcionar orientación estratégica que impulse el crecimiento y la eficiencia operativa.",
-      "features": [
-        "Servicios de CFO Virtual",
-        "Planificación y Análisis Financiero",
-        "Revisiones de Desempeño Empresarial",
-        "Optimización del Capital de Trabajo",
-        "Soporte de Estrategia de Crecimiento"
-      ]
-    },
     "automation": {
       "title": "Automatización de Procesos e Integración",
       "description": "Optimice sus operaciones financieras con flujos de trabajo automatizados e integración perfecta entre sistemas contables y plataformas analíticas.",
@@ -87,7 +76,18 @@
         "Desarrollo de Tableros Personalizados",
         "Capacitación y Soporte del Sistema"
       ]
-    }
+    },
+    "advisory": {
+      "title": "Servicios Tributarios para Clientes Privados",
+      "description": "Soluciones tributarias exclusivas por referencia, coordinando estratégicamente los impuestos personales con los objetivos financieros.",
+      "features": [
+        "Preparación de Impuestos",
+        "Planificación de Compensación",
+        "Coordinación Tributaria",
+        "Optimización de Ingresos por Inversiones",
+        "Minimización Estratégica de Impuestos"
+      ]
+    },
   },
   "video": {
     "title": "Nuestra Historia",
@@ -113,3 +113,4 @@
     "rights": "Todos los derechos reservados."
   }
 }
+
