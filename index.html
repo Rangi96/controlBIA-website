@@ -964,6 +964,18 @@
                 display: none;
             }
 
+            .nav-links.mobile-open {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(15, 15, 35, 0.95);
+                padding: 20px;
+                border-radius: 0 0 20px 20px;
+            }
+
             .mobile-menu-btn {
                 display: flex;
             }
@@ -1001,7 +1013,7 @@
             /* Add these inside the existing @media (max-width: 768px) block */
             .language-toggle {
                 position: absolute;
-                right: 60px;
+                right: 95px;
                 top: 50%;
                 transform: translateY(-50%);
                 margin-left: 0;
@@ -1375,7 +1387,7 @@
                 <a href="#home" style="color: rgba(255, 255, 255, 0.6); text-decoration: none;" data-translate="nav.home">Home</a>
                 <a href="#about" style="color: rgba(255, 255, 255, 0.6); text-decoration: none;" data-translate="nav.about">About</a>
                 <a href="#services" style="color: rgba(255, 255, 255, 0.6); text-decoration: none;" data-translate="nav.services">Services</a>
-                <a href="#dashboards" style="color: rgba(255, 255, 255, 0.6); text-decoration: none;" data-translate="nav.dashboards">Dashboards</a>
+                <a href="#contact" style="color: rgba(255, 255, 255, 0.6); text-decoration: none;" data-translate="nav.getStarted">Get Started</a>
             </div>
             <p style="color: rgba(255, 255, 255, 0.4); font-size: 0.9em;">
                 © 2025 Control BIA. <span data-translate="footer.rights">All rights reserved.</span>
@@ -1388,10 +1400,10 @@
     <script>
 
         // Navbar scroll effect
+        const navbarEl = document.getElementById('navbar');
         function handleNavbarScroll() {
-            const navbar = document.getElementById('navbar');
-            const scrolled = window.scrollY > 50;
-            navbar.classList.toggle('scrolled', scrolled);
+            if (!navbarEl) return;
+            navbarEl.classList.toggle('scrolled', window.scrollY > 50);
         }
 
         // Smooth scroll for navigation links
@@ -1430,23 +1442,32 @@
             });
         }
 
-        // Counter animation
+        // Counter animation — one independent rAF loop per counter, idempotent.
         function animateCounters() {
             const counters = document.querySelectorAll('[data-count]');
-            const speed = 200;
+            const duration = 1500;
 
             counters.forEach(counter => {
-                const target = +counter.getAttribute('data-count');
-		const suffix = counter.getAttribute('data-suffix') || '';
-                const count = +counter.innerText;
-                const inc = target / speed;
+                if (counter.dataset.animated) return;
+                counter.dataset.animated = 'true';
 
-                if (count < target) {
-                    counter.innerText = Math.ceil(count + inc);
-                    setTimeout(() => animateCounters(), 1);
-                } else {
-                    counter.innerText = target + suffix;
+                const target = +counter.getAttribute('data-count');
+                const suffix = counter.getAttribute('data-suffix') || '';
+                const isFloat = target % 1 !== 0;
+                const start = performance.now();
+
+                function tick(now) {
+                    const progress = Math.min((now - start) / duration, 1);
+                    const value = target * progress;
+                    if (progress < 1) {
+                        counter.innerText = isFloat ? value.toFixed(1) : Math.floor(value);
+                        requestAnimationFrame(tick);
+                    } else {
+                        counter.innerText = (isFloat ? target.toFixed(1) : target) + suffix;
+                    }
                 }
+
+                requestAnimationFrame(tick);
             });
         }
 
@@ -1626,36 +1647,13 @@
 
         if (mobileMenuBtn && navLinks) {
             mobileMenuBtn.addEventListener('click', () => {
-                navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
-                navLinks.style.flexDirection = 'column';
-                navLinks.style.position = 'absolute';
-                navLinks.style.top = '100%';
-                navLinks.style.left = '0';
-                navLinks.style.right = '0';
-                navLinks.style.background = 'rgba(15, 15, 35, 0.95)';
-                navLinks.style.padding = '20px';
-                navLinks.style.borderRadius = '0 0 20px 20px';
+                navLinks.classList.toggle('mobile-open');
+            });
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => navLinks.classList.remove('mobile-open'));
             });
         }
 
-        // Lazy loading for iframes
-        const iframes = document.querySelectorAll('iframe[loading="lazy"]');
-        const iframeObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const iframe = entry.target;
-                    if (iframe.dataset.src) {
-                        iframe.src = iframe.dataset.src;
-                        iframe.removeAttribute('data-src');
-                    }
-                    iframeObserver.unobserve(iframe);
-                }
-            });
-        });
-
-        iframes.forEach(iframe => {
-            iframeObserver.observe(iframe);
-        });
     </script>
 
 	<!--/* SECTION 23: Final Closing Tags */-->
