@@ -1488,28 +1488,61 @@
             renderer.setClearColor(0x000000, 0);
             container.appendChild(renderer.domElement);
 
+            // Build a box with bevel-rounded corners on all 12 edges by extruding
+            // a rounded rectangle and adding a bevel of the same radius on each end.
+            function createRoundedBoxGeometry(width, height, depth, radius, segments) {
+                const shape = new THREE.Shape();
+                const w = width - radius * 2;
+                const h = height - radius * 2;
+                shape.absarc(-w / 2, -h / 2, radius, Math.PI, Math.PI * 1.5);
+                shape.absarc( w / 2, -h / 2, radius, Math.PI * 1.5, Math.PI * 2);
+                shape.absarc( w / 2,  h / 2, radius, 0, Math.PI * 0.5);
+                shape.absarc(-w / 2,  h / 2, radius, Math.PI * 0.5, Math.PI);
+
+                const geometry = new THREE.ExtrudeGeometry(shape, {
+                    depth: depth - radius * 2,
+                    bevelEnabled: true,
+                    bevelSegments: segments,
+                    steps: 1,
+                    bevelSize: radius,
+                    bevelThickness: radius,
+                    curveSegments: segments
+                });
+                geometry.translate(0, 0, -(depth - radius * 2) / 2);
+                geometry.computeVertexNormals();
+                return geometry;
+            }
+
             // ===================================
             // BRIGHTNESS CONTROLS - MODIFY THESE VALUES
             // ===================================
-            const AMBIENT_BRIGHTNESS = 0.8;      // Overall brightness (0.1 = very dark, 1.5 = very bright)
-            const MAIN_LIGHT_BRIGHTNESS = 0.6;   // Main light intensity
-            const SIDE_LIGHT_BRIGHTNESS = 0.4;   // Side lights intensity
-            const GLOW_BRIGHTNESS = 0.3;        // Bar glow effect (0 = no glow, 0.2 = strong glow)
+            const AMBIENT_BRIGHTNESS = 0.5;      // Overall brightness (0.1 = very dark, 1.5 = very bright)
+            const MAIN_LIGHT_BRIGHTNESS = 1.25;  // Main light intensity (drives the front specular streak)
+            const SIDE_LIGHT_BRIGHTNESS = 0.55;  // Side lights intensity
+            const GLOW_BRIGHTNESS = 0.22;        // Bar glow effect (0 = no glow, 0.5 = strong glow)
             
             // Lighting setup
             const ambientLight = new THREE.AmbientLight(0xffffff, AMBIENT_BRIGHTNESS);
             scene.add(ambientLight);
 
-            const directionalLight1 = new THREE.DirectionalLight(0xB070DD, MAIN_LIGHT_BRIGHTNESS);
-            directionalLight1.position.set(5, 10, 5);
+            // Hemisphere light fakes a sky/ground gradient so glossy surfaces have
+            // something to reflect, killing the matte-plastic look.
+            const hemiLight = new THREE.HemisphereLight(0xb8d4ff, 0x1a0a2a, 0.85);
+            scene.add(hemiLight);
+
+            // Main light: clean white from above-front, drives the vertical specular streak.
+            const directionalLight1 = new THREE.DirectionalLight(0xffffff, MAIN_LIGHT_BRIGHTNESS);
+            directionalLight1.position.set(2, 12, 8);
             scene.add(directionalLight1);
 
-            const directionalLight2 = new THREE.DirectionalLight(0xB070DD, SIDE_LIGHT_BRIGHTNESS);
-            directionalLight2.position.set(-5, 5, 5);
+            // Cool fill from the left for edge definition.
+            const directionalLight2 = new THREE.DirectionalLight(0x6090ff, SIDE_LIGHT_BRIGHTNESS);
+            directionalLight2.position.set(-8, 3, 4);
             scene.add(directionalLight2);
 
-            const directionalLight3 = new THREE.DirectionalLight(0xB070DD, SIDE_LIGHT_BRIGHTNESS);
-            directionalLight3.position.set(0, -5, 3);
+            // Warm rim light from behind-right for separation.
+            const directionalLight3 = new THREE.DirectionalLight(0xffaadd, SIDE_LIGHT_BRIGHTNESS * 0.7);
+            directionalLight3.position.set(6, -2, -4);
             scene.add(directionalLight3);
 
             // ===================================
@@ -1525,51 +1558,61 @@
             const sideBarYOffset = sideBarStart - middleBarHeight / 2 + sideBarHeight / 2;
 
             const barData = [
-                { 
-                    height: sideBarHeight, 
-                    color: 0x3060F0, // Blue
+                {
+                    height: sideBarHeight,
+                    color: 0x3060F0, // Vivid royal blue
                     x: -BAR_SPACING,  // Left bar position
                     y: sideBarYOffset,
-                    name: 'Analytics' 
+                    name: 'Analytics'
                 },
-                { 
-                    height: middleBarHeight, 
-                    color: 0xC080E0, // Purple
+                {
+                    height: middleBarHeight,
+                    color: 0xA040D8, // Vivid saturated purple
                     x: 0,             // Middle bar position
                     y: 0,
-                    name: 'Intelligence' 
+                    name: 'Intelligence'
                 },
-                { 
-                    height: sideBarHeight, 
-                    color: 0x60C0FF, // Cyan
+                {
+                    height: sideBarHeight,
+                    color: 0x3895E0, // Deeper cyan
                     x: BAR_SPACING,   // Right bar position
                     y: sideBarYOffset,
-                    name: 'Automation' 
+                    name: 'Automation'
                 }
             ];
 
             // ===================================
             // BAR MATERIAL CONTROLS - MODIFY THESE VALUES
             // ===================================
-            const METALNESS = 0.6;        // How metallic the bars look (0 = matte, 1 = mirror)
-            const ROUGHNESS = 0.4;        // How rough the surface is (0 = smooth, 1 = rough)
-            const REFLECTIVITY = 0.8;     // How reflective the bars are
+            const METALNESS = 0.4;        // How metallic the bars look (0 = matte, 1 = mirror)
+            const ROUGHNESS = 0.08;       // How rough the surface is (0 = smooth, 1 = rough) — very low for glassy reflections
+            const REFLECTIVITY = 1.0;     // How reflective the bars are
+
+            // ===================================
+            // SHAPE CONTROLS - MODIFY THESE VALUES
+            // ===================================
+            const CORNER_RADIUS = 0.12;   // Edge rounding (0 = sharp box, 0.8 = pillow soft)
+            const CORNER_SEGMENTS = 8;    // Smoothness of rounded edges (4 = faceted, 8 = silky)
+            const IDLE_BOB_AMPLITUDE = 0.07;  // Vertical float distance when idle (0 = no movement)
+            const IDLE_BOB_SPEED = 0.9;       // Float speed (radians/sec)
 
             barData.forEach((bar, index) => {
-                const geometry = new THREE.BoxGeometry(3.5, bar.height, 3.5, 16, 16, 16);
+                const geometry = createRoundedBoxGeometry(3.5, bar.height, 3.5, CORNER_RADIUS, CORNER_SEGMENTS);
                 const material = new THREE.MeshPhysicalMaterial({
                     color: bar.color,
                     metalness: METALNESS,
                     roughness: ROUGHNESS,
                     reflectivity: REFLECTIVITY,
-                    clearcoat: 0.3,
-                    clearcoatRoughness: 0.4,
+                    clearcoat: 0.85,
+                    clearcoatRoughness: 0.08,
                     emissive: bar.color,
                     emissiveIntensity: GLOW_BRIGHTNESS  // Uses the brightness control
                 });
 
                 const mesh = new THREE.Mesh(geometry, material);
                 mesh.position.set(bar.x, bar.y, 0);
+                mesh.userData.baseY = bar.y;
+                mesh.userData.bobPhase = index * 0.85;
                 barGroup.add(mesh);
             });
 
@@ -1593,12 +1636,19 @@
             });
 
             // Animation loop
+            const animStart = performance.now();
             function animate() {
                 currentRotationX += (targetRotationX - currentRotationX) * 0.01;
                 currentRotationY += (targetRotationY - currentRotationY) * 0.01;
 
                 barGroup.rotation.x = currentRotationX;
                 barGroup.rotation.y = currentRotationY;
+
+                const elapsed = (performance.now() - animStart) / 1000;
+                barGroup.children.forEach(bar => {
+                    bar.position.y = bar.userData.baseY +
+                        Math.sin(elapsed * IDLE_BOB_SPEED + bar.userData.bobPhase) * IDLE_BOB_AMPLITUDE;
+                });
 
                 renderer.render(scene, camera);
                 requestAnimationFrame(animate);
